@@ -15,7 +15,7 @@ import com.university.repository.StudentRepository;
 @Transactional
 public class StudentServices extends GenericServices<Student, Long> {
 
-	@SuppressWarnings("unused")		
+		
 	private final StudentRepository studentRepository;
 
 	public StudentServices(StudentRepository studentRepository) {
@@ -32,5 +32,7 @@ public class StudentServices extends GenericServices<Student, Long> {
 			return null;
 		}
 	}
-	
+	public List<Student> getByName(String name){
+		return studentRepository.getByName(name);
+	}
 }

@@ -14,4 +14,7 @@ public interface StudentRepository extends GenericRepository<Student, Long>{
 	@Query("FROM Enrollment e WHERE e.student.id =?1")
 	public List<Enrollment> getEnrolledById(long id);
 	
+	
+	@Query("SELECT st FROM Student st WHERE st.firstName +' '+ st.lastName  LIKE %?1% ORDER BY st.firstName ")
+	public List<Student> getByName(String name);
 }

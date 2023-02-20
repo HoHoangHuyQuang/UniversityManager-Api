@@ -1,9 +1,15 @@
 package com.university.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -20,9 +26,11 @@ public class Auth {
 
 	private String password;
 
-	@OneToOne(cascade = CascadeType.MERGE)
-	@JoinColumn(name = "role_id")
-	private Role role;
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(	name = "user_roles", 
+				joinColumns = @JoinColumn(name = "user_id"), 
+				inverseJoinColumns = @JoinColumn(name = "role_id"))
+	private Set<Role> roles = new HashSet<>();
 
 	public User getUser() {
 		return user;
@@ -48,12 +56,22 @@ public class Auth {
 		this.password = password;
 	}
 
-	public Role getRole() {
-		return role;
+
+
+	public Set<Role> getRoles() {
+		return roles;
 	}
 
-	public void setRole(Role role) {
-		this.role = role;
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
+
+	public Auth(String username, User user, String password, Set<Role> roles) {
+		super();
+		this.username = username;
+		this.user = user;
+		this.password = password;
+		this.roles = new HashSet<Role>();
 	}
 
 	public Auth() {

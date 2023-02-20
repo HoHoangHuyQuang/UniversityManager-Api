@@ -193,5 +193,23 @@ public class StudentController {
 		}
 	}
 /// end of enroll
+	
+// find 
+	@GetMapping("/students/find/{str}")
+	public ResponseEntity<List<Student>> getStudentByName(@PathVariable("str") String str) {
+		try {
+			List<Student> lst = studentServices.getByName(str);
+			if (lst.isEmpty()) {
+				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			}
+
+			return new ResponseEntity<>(lst, HttpStatus.OK);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+/// end of find
 
 }
